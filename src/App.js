@@ -1,24 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NavBar from './components/NavBar';
+import Users from './pages/Users';
+import Expense from './pages/Expense';
+import AddUsers from './components/users/AddUsers';
+import AddExpense from './components/report/AddExpense';
 
 function App() {
+  const hiddenPaths = [
+    '/auth',
+  ];
+  const shouldHideBottomNav = hiddenPaths.includes(location.pathname);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Router>
+        <Routes>
+          <Route path="/mir/expense" element={<Expense />} />
+          <Route path="/mir/expense/add" element={<AddExpense />} />
+          <Route path="/mir/users" element={<Users />} />
+          <Route path="/mir/users/:id" element={<Users />} />
+          <Route path="/mir/users/add" element={<AddUsers />} />
+          <Route path="*" element={<Expense />} />
+        </Routes>
+        {!shouldHideBottomNav && <NavBar />}
+      </Router>
+    </>
   );
 }
 
