@@ -1,96 +1,105 @@
 import { ArrowRightCircleIcon, UserIcon } from '@heroicons/react/24/solid';
 import axios from 'axios';
-import { url } from '../../api/url';
 import { useEffect, useState } from 'react';
+import { url } from '../api/url';
 
 const ListUsers = () => {
-  const [activeUserId, setActiveUserId] = useState(null); // Храним ID активного пользователя
   const [data, setData] = useState(() => {
     const savedData = localStorage.getItem('users');
     return savedData ? JSON.parse(savedData) : null;
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+  
+  // Это флаг, чтобы избежать ненужных запросов
+  const [isDataFetched, setIsDataFetched] = useState(false);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Запрашиваем данные с сервера
-        const response = await axios.get(url);
-        const { users, lastUpdated } = response.data;
+    // Если данные уже загружены, не делаем запрос
+    if (isDataFetched) return;
 
-        // Получаем сохраненные данные
-        const savedData = JSON.parse(localStorage.getItem('users'));
-        const savedLastUpdated = localStorage.getItem('usersLastUpdated');
-
-        // Сравниваем данные и обновляем при необходимости
-        if (!savedData || savedLastUpdated !== lastUpdated) {
-          setData(users);
-          localStorage.setItem('users', JSON.stringify(users));
-          localStorage.setItem('usersLastUpdated', lastUpdated);
+    // Запрос к серверу
+    axios
+      .get(url, {
+        params: {
+          action: 'getUsers',
+        },
+      })
+      .then((response) => {
+        // Проверяем, изменились ли данные
+        const newData = response.data;
+        
+        if (JSON.stringify(newData) !== JSON.stringify(data)) {
+          // Если данные изменились, обновляем их и сохраняем в localStorage
+          setData(newData);
+          localStorage.setItem('users', JSON.stringify(newData));
         }
-      } catch (error) {
-        console.error('Ошибка:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
+        // Отмечаем, что данные были загружены
+        setIsDataFetched(true);
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+  }, [isDataFetched, data]);
 
   if (!data) {
-    return (
-      <p className="flex justify-center text-3xl text-red-400">Загрузка...</p>
-    );
+    return <div>Загрузка...</div>;
   }
 
-  // Функция для переключения аккордеона
-  const toggleAccordion = (userId) => {
-    setActiveUserId(activeUserId === userId ? null : userId); // Скрываем, если тот же ID
+  const handleOpen = (report_id) => {
+    setIsOpen((prev) => (prev === report_id ? null : report_id));
   };
 
   return (
-    <ul className="flex flex-col gap-5 pb-40">
-      {data.map((d) => (
-        <li
-          key={d.user_id}
-          className="w-80 min-h-20 flex flex-col bg-sky-600 rounded-lg text-white"
-          onClick={() => toggleAccordion(d.user_id)}
+    <ul className="flex flex-col gap-3 pb-40">
+        {data.map(user => (
+          <li
+          className="w-[335px] min-h-20 flex flex-col bg-blue-500 rounded-lg text-white"
+          onClick={() => handleOpen(user.user_id)}
         >
           <div
             className="w-full flex items-center px-3 h-20 cursor-pointer"
           >
-            <div className="w-12 h-12 flex items-center justify-center bg-sky-800 rounded-full">
+            <div className="w-12 h-12 flex items-center justify-center bg-blue-800 rounded-full">
               <UserIcon className="size-6" />
             </div>
-            <h2 className="w-[200px] text-2xl font-semibold mx-3">{d.name}</h2>
+            <h2 className="w-[210px] text-xl font-semibold mx-3">{user.name}</h2>
             <ArrowRightCircleIcon
-              className={`size-6 transition-transform ${
-                activeUserId === d.user_id ? 'rotate-90' : ''
-              }`}
+              className={`size-8 transition-transform ${isOpen === user.user_id ? 'rotate-90' : ''}`}
             />
           </div>
-          {activeUserId === d.user_id && ( // Раскрываемый контент
-            <div className="p-3 bg-sky-700 rounded-b-lg">
-              <h2 className='text-sky-400'>
-                <span className="font-bold text-white">ID:</span> {d.user_id}
+            {isOpen === user.user_id && <div className="p-3 bg-blue-700 rounded-b-lg">
+              <h2 className='text-white font-semibold flex justify-between'>
+                <span className="text-blue-400 font-normal">ID:</span>
+                {user.user_id}
               </h2>
-              <h2 className='text-sky-400'>
-                <span className="font-bold text-white">Дата добавления:</span> {new Date(d.date).toLocaleDateString('ru-RU')}
+              <h2 className='text-white font-semibold flex justify-between'>
+                <span className="text-blue-400 font-normal">Дата добавления:</span>
+                {new Date(user.date).toLocaleDateString('ru-RU', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric',
+                }) + 'г'}
               </h2>
-              <h2 className='text-sky-400'>
-                <span className="font-bold text-white">Имя:</span> {d.name}
+              <h2 className='text-white font-semibold flex justify-between'>
+                <span className="text-blue-400 font-normal">Логин:</span>
+                {user.login}
               </h2>
-              <h2 className='text-sky-400'>
-                <span className="font-bold text-white">Логин:</span> {d.login}
+              <h2 className='text-white font-semibold flex justify-between'>
+                <span className="text-blue-400 font-normal">Пароль:</span> 
+                {user.password}
               </h2>
-              <h2 className='text-sky-400'>
-                <span className="font-bold text-white">Пароль:</span> {d.password}
+              <h2 className='text-white font-semibold flex justify-between'>
+                <span className="text-blue-400 font-normal">Должность:</span> 
+                {user.role}
               </h2>
-              <h2 className='text-sky-400'>
-                <span className="font-bold text-white">Должность:</span> {d.role}
+              <h2 className='text-white font-semibold flex justify-between'>
+                <span className="text-blue-400 font-normal">Дневная ставка:</span> 
+                {user.salary}₽
               </h2>
-            </div>
-          )}
+            </div>}
         </li>
-      ))}
+        ))}
     </ul>
   );
 };
