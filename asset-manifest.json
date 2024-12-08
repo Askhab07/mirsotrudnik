@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/mirsotrudnik/static/css/main.1dd4594e.css",
+    "main.js": "/mirsotrudnik/static/js/main.0de3822c.js",
+    "index.html": "/mirsotrudnik/index.html",
+    "main.1dd4594e.css.map": "/mirsotrudnik/static/css/main.1dd4594e.css.map",
+    "main.0de3822c.js.map": "/mirsotrudnik/static/js/main.0de3822c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1dd4594e.css",
+    "static/js/main.0de3822c.js"
+  ]
+}
