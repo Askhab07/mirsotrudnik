@@ -1,48 +1,50 @@
 import { ArrowRightCircleIcon, UserIcon } from '@heroicons/react/24/solid';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
-import { url } from '../api/url';
+// import axios from 'axios';
+import { useContext, useState } from 'react';
+import { UsersContext } from '../context/UsersContext';
+// import { url } from '../api/url';
 
 const ListUsers = () => {
-  const [data, setData] = useState(() => {
-    const savedData = localStorage.getItem('users');
-    return savedData ? JSON.parse(savedData) : null;
-  });
+  const { users } = useContext(UsersContext);
+  // const [data, setData] = useState(() => {
+  //   const savedData = localStorage.getItem('users');
+  //   return savedData ? JSON.parse(savedData) : null;
+  // });
 
   const [isOpen, setIsOpen] = useState(false);
   
   // Это флаг, чтобы избежать ненужных запросов
-  const [isDataFetched, setIsDataFetched] = useState(false);
+  // const [isDataFetched, setIsDataFetched] = useState(false);
 
-  useEffect(() => {
-    // Если данные уже загружены, не делаем запрос
-    if (isDataFetched) return;
+  // useEffect(() => {
+  //   // Если данные уже загружены, не делаем запрос
+  //   if (isDataFetched) return;
 
-    // Запрос к серверу
-    axios
-      .get(url, {
-        params: {
-          action: 'getUsers',
-        },
-      })
-      .then((response) => {
-        // Проверяем, изменились ли данные
-        const newData = response.data;
+  //   // Запрос к серверу
+  //   axios
+  //     .get(url, {
+  //       params: {
+  //         action: 'getUsers',
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // Проверяем, изменились ли данные
+  //       const newData = response.data;
         
-        if (JSON.stringify(newData) !== JSON.stringify(data)) {
-          // Если данные изменились, обновляем их и сохраняем в localStorage
-          setData(newData);
-          localStorage.setItem('users', JSON.stringify(newData));
-        }
-        // Отмечаем, что данные были загружены
-        setIsDataFetched(true);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-  }, [isDataFetched, data]);
+  //       if (JSON.stringify(newData) !== JSON.stringify(data)) {
+  //         // Если данные изменились, обновляем их и сохраняем в localStorage
+  //         setData(newData);
+  //         localStorage.setItem('users', JSON.stringify(newData));
+  //       }
+  //       // Отмечаем, что данные были загружены
+  //       setIsDataFetched(true);
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error fetching data:', error);
+  //     });
+  // }, [isDataFetched, data]);
 
-  if (!data) {
+  if (!users) {
     return <div>Загрузка...</div>;
   }
 
@@ -52,7 +54,7 @@ const ListUsers = () => {
 
   return (
     <ul className="flex flex-col gap-3 pb-40">
-        {data.map(user => (
+        {users.map(user => (
           <li
           className="w-[335px] min-h-20 flex flex-col bg-blue-500 rounded-lg text-white"
           onClick={() => handleOpen(user.user_id)}

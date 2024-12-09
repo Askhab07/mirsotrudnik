@@ -1,31 +1,16 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { url } from '../api/url';
+import React, { useContext, useState } from 'react';
+import { UsersContext } from '../context/UsersContext';
+import { ReportsContext } from '../context/ReportsContext';
 
 const AddReport = () => {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const { users } = useContext(UsersContext);
+  const { handleAddReport, isLoading } = useContext(ReportsContext);
   const [login, setLogin] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
   const [comment, setComment] = useState('');
 
-  useEffect(() => {
-    axios
-      .get(url, {
-        params: {
-          action: 'getUsers',
-        },
-      })
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error('Ошибка при загрузке данных:', error);
-      });
-  }, []);
-
-  if (!data) {
+  if (!users) {
     return (
       <div className="flex items-center justify-center w-full min-h-screen text-3xl text-blue-800 font-bold animate-pulse">
         Загрузка...
@@ -33,67 +18,31 @@ const AddReport = () => {
     );
   }
 
-  const handleClick = async (e) => {
+  const handleClick = (e) => {
     e.preventDefault();
-    setIsLoading(true);
-  
-    try {
-      // Генерация текущей даты в формате DD.MM.YYYY
-      const currentDate = new Date().toLocaleDateString('ru-RU', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      });
-  
-      // Тело запроса
-      const requestData = {
-        login,
-        date: currentDate,
-        category,
-        amount: Number(amount), // Преобразуем сумму в число
-        comment,
-      };
-  
-      const response = await axios.post(
-        url, // URL сервера
-        requestData, // Тело запроса
-        {
-          params: {
-            action: 'addReport', // Действие
-          },
-          headers: {
-            'Content-Type': 'text/plain;charset=UTF-8', // Корректный Content-Type
-          },
-        }
-      );
-  
-      console.log('Успешный ответ:', response.data);
-      alert('Добавлено!')
-  
-      // Очистка формы после успешного добавления
-      setLogin('');
-      setCategory('');
-      setAmount('');
-      setComment('');
-    } catch (error) {
-      if (error.response) {
-        console.error('Ответ с ошибкой от сервера:', error.response.data);
-      } else if (error.request) {
-        console.error('Запрос был отправлен, но ответа нет:', error.request);
-      } else {
-        console.error('Произошла ошибка при настройке запроса:', error.message);
-      }
-    } finally {
-      setIsLoading(false);
+
+    if (amount <= 0 || amount > 1000000) {
+      alert('Сумма должна быть больше 0 и меньше 1 000 000');
+      return;
     }
+
+    const newReport = {
+      login,
+      category,
+      amount: Number(amount),
+      comment,
+    };
+
+    handleAddReport(newReport);
+    setLogin('');
+    setCategory('');
+    setAmount('');
+    setComment('');
   };
-  
 
   return (
     <div className="min-h-screen px-5 pt-8 pb-24">
-      <h1 className="text-xl font-bold mb-8">
-        Добавить штраф или долг
-      </h1>
+      <h1 className="text-xl font-bold mb-8">Добавить штраф или долг</h1>
       <form className="flex flex-col gap-5" onSubmit={handleClick}>
         <select
           name=""
@@ -106,7 +55,7 @@ const AddReport = () => {
           <option value="" disabled>
             Логин
           </option>
-          {data.map((user) => (
+          {users.map((user) => (
             <option key={user.userId} value={user.name}>
               {user.name}
             </option>
@@ -119,10 +68,11 @@ const AddReport = () => {
           onChange={(e) => setCategory(e.target.value)}
         >
           <option value="" disabled>
-            Выберите долг или штраф
+            Выберите категорию
           </option>
           <option value="Долг">Долг</option>
           <option value="Штраф">Штраф</option>
+          <option value="Зарплата">Зарплата</option>
         </select>
         <input
           type="number"

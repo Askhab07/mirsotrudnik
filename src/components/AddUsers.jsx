@@ -1,24 +1,15 @@
-import axios from 'axios';
-import { url } from '../api/url';
-import { useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
+import { UsersContext } from '../context/UsersContext';
 
 const AddUsers = () => {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const {users, isLoading, handleAddUser} = useContext(UsersContext);
   const [name, setName] = useState('');
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('');
   const [salary, setSalary] = useState('');
 
-  useEffect(() => {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error('Ошибка при загрузке данных:', error));
-  }, []);
-
-  if (!data) {
+  if (!users) {
     return (
       <div className="flex items-center justify-center w-full min-h-screen text-3xl text-blue-800 font-bold animate-pulse">
         Загрузка...
@@ -26,11 +17,10 @@ const AddUsers = () => {
     );
   }
 
-  const handleAddUser = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    const requestData = {
+    const newUser = {
       name,
       login,
       password,
@@ -38,34 +28,22 @@ const AddUsers = () => {
       salary: Number(salary),
     };
 
-    try {
-      const response = await axios.post(url, requestData, {
-        params: {
-          action: 'addUser',
-        },
-        headers: {
-          'Content-Type': 'text/plain;charset=UTF-8',
-        },
-      });
+    handleAddUser(newUser); // Отправляем запрос для добавления пользователя
 
-      alert('Добавлено!');
-      console.log(response.data);
-      setName('');
-      setLogin('');
-      setPassword('');
-      setRole('');
-      setSalary('');
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    // Очищаем поля формы
+    setName('');
+    setLogin('');
+    setPassword('');
+    setRole('');
+    setSalary('');
+  }; 
 
   return (
     <div className="min-h-screen px-8 pt-8 pb-16">
       <h1 className="text-2xl mb-5 font-semibold">Добавь нового сотрудника</h1>
       <form
         className="flex flex-col items-center gap-5"
-        onSubmit={handleAddUser}
+        onSubmit={handleSubmit}
       >
         <input
           className="w-[335px] h-14 rounded-lg pl-3 text-xl border-2 border-blue-400 outline-blue-600"
