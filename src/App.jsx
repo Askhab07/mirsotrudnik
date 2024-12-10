@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import NavBar from './components/NavBar';
 import Users from './pages/Users';
 import Report from './pages/Report';
@@ -19,7 +19,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<Users />} />
         <Route path="/users/add" element={<AddUsers />} />
-        <Route path="*" element={<Report />} />
+        <Route path="*" element={<Navigate to="/report" replace/>} />
       </Routes>
       {!shouldHideBottomNav && <NavBar />}
     </>

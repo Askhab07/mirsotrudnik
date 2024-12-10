@@ -56,7 +56,7 @@ const AddReport = () => {
             Логин
           </option>
           {users.map((user) => (
-            <option key={user.userId} value={user.name}>
+            <option key={user.user_id} value={user.name}>
               {user.name}
             </option>
           ))}
