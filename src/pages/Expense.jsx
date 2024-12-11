@@ -22,16 +22,19 @@ const Expense = () => {
       (!startDate || expenseDate >= startDate) &&
       (!endDate || expenseDate <= endDate);
 
-      const matchesSearch = (r.login?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
-      (r.category?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
-      (r.comment?.toLowerCase().includes(searchQuery.toLowerCase()) || false);
+      const matchesSearch = (
+  (r.login?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
+  (r.category?.toLowerCase().includes(searchQuery.toLowerCase()) || false) ||
+  (typeof r.comment === 'string' && r.comment.toLowerCase().includes(searchQuery.toLowerCase()) || false)
+);
+
   
     return matchesLogin && matchesDate && matchesSearch;
   });
 
   return (
     <div className="min-h-screen pt-8 pb-24 px-5">
-      <h1 className="text-2xl text-whitetext-3xl mb-5 font-semibold">Отчеты</h1>
+      <h1 className="text-2xl text-whitetext-3xl mb-5 font-semibold">Расход</h1>
       <SearchExpense searchQuery={searchQuery} onSearchChange={setSearchQuery} /> {/* Передаем props */}
       <FilterExpense
         selectedLogin={selectedLogin}
@@ -43,10 +46,10 @@ const Expense = () => {
       <ListExponse expense={filteredExpenses} />
       <div className="flex justify-between fixed bottom-24 right-5">
         <Link
-          className="w-14 h-14 bg-blue-600 flex justify-center items-center text-xl rounded-lg"
+          className="w-14 h-14 bg-white shadow flex justify-center items-center text-xl rounded-xl"
           to="/expense/add"
         >
-          <DocumentPlusIcon className="size-6 text-white" />
+          <DocumentPlusIcon className="size-6 text-blue-600" />
         </Link>
       </div>
     </div>

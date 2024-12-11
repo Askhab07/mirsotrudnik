@@ -5,7 +5,7 @@ const SearchExpense = ({ searchQuery, onSearchChange }) => {
     return (
         <div className="flex justify-between items-center w-[335px] h-10 border-2 border-blue-200 rounded-lg px-3 text-sky-800 mb-5">
             <input
-                className="w-64 bg-inherit outline-none placeholder:text-blue-600"
+                className="w-64 bg-inherit outline-none placeholder:text-blue-300"
                 type="text"
                 placeholder="Поиск..."
                 value={searchQuery}

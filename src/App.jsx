@@ -4,6 +4,7 @@ import Users from './pages/Users';
 import Expense from './pages/Expense';
 import AddUsers from './components/AddUsers';
 import AddExpense from './layout/expense/AddExpense';
+import Report from './pages/Report';
 
 function App() {
   const hiddenPaths = ['/auth'];
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/expense" element={<Expense />} />
         <Route path="/expense/add" element={<AddExpense />} />
+        <Route path="/report" element={<Report />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<Users />} />
         <Route path="/users/add" element={<AddUsers />} />

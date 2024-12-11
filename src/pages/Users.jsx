@@ -7,9 +7,11 @@ const Users = () => {
         <div className="min-h-screen pt-8 px-5">
           <h1 className='text-2xl text-whitetext-3xl mb-5 font-semibold'>Сотрудники</h1>
             <ListUsers />
-            <Link className='w-14 h-14 flex justify-center items-center text-xl text-white bg-blue-600 rounded-lg font-semibold fixed right-5 bottom-24' to='/users/add'>
-              <UserPlusIcon className='size-6'/>
+            <div className='flex justify-between fixed bottom-24 right-5'>
+            <Link className='w-14 h-14 bg-white shadow flex justify-center items-center text-xl rounded-xl' to='/users/add'>
+              <UserPlusIcon className='size-6 text-blue-600'/>
             </Link>
+            </div>
           </div>
     );
 };

@@ -9,7 +9,7 @@ import { NavLink } from 'react-router-dom';
 
 const NavBar = () => {
   return (
-    <nav className="flex items-center min-w-full h-20 px-2 bg-white fixed bottom-0 shadow-[0_0px_10px_0px_rgba(0,0,0,0.5)] shadow-blue-300 text-white">
+    <nav className="flex items-center min-w-full h-20 px-2 bg-white fixed bottom-0 shadow-[0_0px_10px_0px_rgba(0,0,0,0.5)] shadow-blue-100 text-white">
       <ul className="w-full flex justify-between">
         <li className="w-16">
           <NavLink
@@ -23,7 +23,7 @@ const NavBar = () => {
         <li className="w-16">
           <NavLink
             className={({isActive}) => `flex flex-col items-center gap-1 text-[10px] ${[isActive ? 'text-blue-500' : 'text-black']}`}
-            to="/chart"
+            to="/report"
           >
             <ChartPieIcon className="size-6" />
             Отчет
