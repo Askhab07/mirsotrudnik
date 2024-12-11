@@ -48,8 +48,8 @@ const ListUsers = () => {
     return <div>Загрузка...</div>;
   }
 
-  const handleOpen = (report_id) => {
-    setIsOpen((prev) => (prev === report_id ? null : report_id));
+  const handleOpen = (expense_id) => {
+    setIsOpen((prev) => (prev === expense_id ? null : expense_id));
   };
 
   return (

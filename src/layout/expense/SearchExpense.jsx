@@ -1,7 +1,7 @@
 import React from 'react';
 import { MagnifyingGlassCircleIcon } from '@heroicons/react/24/solid';
 
-const SearchReport = ({ searchQuery, onSearchChange }) => {
+const SearchExpense = ({ searchQuery, onSearchChange }) => {
     return (
         <div className="flex justify-between items-center w-[335px] h-10 border-2 border-blue-200 rounded-lg px-3 text-sky-800 mb-5">
             <input
@@ -16,4 +16,4 @@ const SearchReport = ({ searchQuery, onSearchChange }) => {
     );
 };
 
-export default SearchReport;
+export default SearchExpense;

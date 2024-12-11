@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { UsersContext } from '../context/UsersContext';
-import { ReportsContext } from '../context/ReportsContext';
+import { UsersContext } from '../../context/UsersContext';
+import { ExpenseContext } from '../../context/ExpenseContext';
 
-const AddReport = () => {
+const AddExpense = () => {
   const { users } = useContext(UsersContext);
-  const { handleAddReport, isLoading } = useContext(ReportsContext);
+  const { handleAddExpense, isLoading } = useContext(ExpenseContext);
   const [login, setLogin] = useState('');
   const [category, setCategory] = useState('');
   const [amount, setAmount] = useState('');
@@ -26,14 +26,14 @@ const AddReport = () => {
       return;
     }
 
-    const newReport = {
+    const newExpense = {
       login,
       category,
       amount: Number(amount),
       comment,
     };
 
-    handleAddReport(newReport);
+    handleAddExpense(newExpense);
     setLogin('');
     setCategory('');
     setAmount('');
@@ -128,4 +128,4 @@ const AddReport = () => {
   );
 };
 
-export default AddReport;
+export default AddExpense;

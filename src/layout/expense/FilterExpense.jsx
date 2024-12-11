@@ -1,12 +1,12 @@
-const FilterReport = ({
+const FilterExpense = ({
   selectedLogin,
   onLoginChange,
   dateRange,
   onDateChange,
-  report
+  expense
 }) => {
 
-  const uniqLogins = [...new Set(report.map((r) => r.login))]
+  const uniqLogins = [...new Set(expense.map((r) => r.login))]
 
   return (
     <div className="h-14 flex justify-between items-center my-3">
@@ -51,4 +51,4 @@ const FilterReport = ({
   );
 };
 
-export default FilterReport;
+export default FilterExpense;

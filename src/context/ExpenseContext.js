@@ -3,12 +3,12 @@ import axios from 'axios';
 import { url } from '../api/url'; // Путь к вашему API
 
 // Создаем контекст для отчетов
-export const ReportsContext = createContext();
+export const ExpenseContext = createContext();
 
-export const ReportsProvider = ({ children }) => {
+export const ExpenseProvider = ({ children }) => {
   // Храним данные отчетов в состоянии
-  const [report, setReport] = useState(() => {
-    const savedData = localStorage.getItem('report');
+  const [expense, setExpense] = useState(() => {
+    const savedData = localStorage.getItem('expense');
     return savedData ? JSON.parse(savedData) : [];
   });
   const [error, setError] = useState(null);
@@ -24,16 +24,16 @@ export const ReportsProvider = ({ children }) => {
       try {
         const response = await axios.get(url, { 
           params: { 
-            action: 'getReport'
+            action: 'getExpense'
            } 
           })
 
           const newData = response.data;
 
         // Проверяем, изменились ли данные
-        if (JSON.stringify(newData) !== JSON.stringify(report)) {
-          setReport(newData);
-          localStorage.setItem('report', JSON.stringify(newData)); // Сохраняем в localStorage
+        if (JSON.stringify(newData) !== JSON.stringify(expense)) {
+          setExpense(newData);
+          localStorage.setItem('expense', JSON.stringify(newData)); // Сохраняем в localStorage
         }
 
         setIsDataFetched(true); // Отмечаем, что данные загружены
@@ -44,21 +44,21 @@ export const ReportsProvider = ({ children }) => {
       }
     };
     fetchUsers();
-  }, [isDataFetched, report]);
+  }, [isDataFetched, expense]);
 
   // Функция для добавления нового отчета
-  const handleAddReport = async (reportData) => {
+  const handleAddExpense = async (expenseData) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(url, reportData, {
-        params: { action: 'addReport' },
+      const response = await axios.post(url, expenseData, {
+        params: { action: 'addExpense' },
         headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
       });
 
-      setReport((prevUsers) => {
-        const updatedReport = [...prevUsers, response.data];
-        localStorage.setItem('users', JSON.stringify(updatedReport));
-        return updatedReport;
+      setExpense((prevUsers) => {
+        const updatedExpense = [...prevUsers, response.data];
+        localStorage.setItem('users', JSON.stringify(updatedExpense));
+        return updatedExpense;
       });
 
       alert('Отчет успешно добавлен!');
@@ -71,8 +71,8 @@ export const ReportsProvider = ({ children }) => {
   };
 
   return (
-    <ReportsContext.Provider value={{ report, isLoading, error, handleAddReport }}>
+    <ExpenseContext.Provider value={{ expense, isLoading, error, handleAddExpense }}>
       {children}
-    </ReportsContext.Provider>
+    </ExpenseContext.Provider>
   );
 };

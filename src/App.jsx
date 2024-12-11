@@ -1,9 +1,9 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import NavBar from './components/NavBar';
+import NavBar from './layout/NavBar';
 import Users from './pages/Users';
-import Report from './pages/Report';
+import Expense from './pages/Expense';
 import AddUsers from './components/AddUsers';
-import AddReport from './components/AddReport';
+import AddExpense from './layout/expense/AddExpense';
 
 function App() {
   const hiddenPaths = ['/auth'];
@@ -14,12 +14,12 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/report" element={<Report />} />
-        <Route path="/report/add" element={<AddReport />} />
+        <Route path="/expense" element={<Expense />} />
+        <Route path="/expense/add" element={<AddExpense />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<Users />} />
         <Route path="/users/add" element={<AddUsers />} />
-        <Route path="*" element={<Navigate to="/report" replace/>} />
+        <Route path="*" element={<Navigate to="/expense" replace/>} />
       </Routes>
       {!shouldHideBottomNav && <NavBar />}
     </>

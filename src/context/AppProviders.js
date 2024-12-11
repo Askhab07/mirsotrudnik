@@ -1,13 +1,13 @@
 import React from 'react';
 import { UsersProvider } from './UsersContext';
-import { ReportsProvider } from './ReportsContext';
+import { ExpenseProvider } from './ExpenseContext';
 
 const AppProviders = ({ children }) => {
     return (
         <UsersProvider>
-            <ReportsProvider>
+            <ExpenseProvider>
                 {children}
-            </ReportsProvider>
+            </ExpenseProvider>
         </UsersProvider>
     );
 };
