@@ -24,9 +24,10 @@ const FilterReport = ({
       </select>
 
       <div className="w-40 h-full flex flex-col justify-center px-2 py-1 items-end gap-1">
-        <label htmlFor="" className='flex items-center gap-1 font-semibold text-sm text-blue-600'>
+        <label htmlFor="start" className='flex items-center gap-1 font-semibold text-sm text-blue-600'>
           От
         <input
+        id='start'
           type="date"
           className="w-full font-semibold text-sm outline-none border-2 rounded-lg border-blue-200 bg-white"
           value={dateRange.start}
@@ -35,9 +36,10 @@ const FilterReport = ({
           }
         />
         </label>
-        <label htmlFor="" className='flex items-center gap-1 font-semibold text-sm text-blue-600'>
+        <label htmlFor="end" className='flex items-center gap-1 font-semibold text-sm text-blue-600'>
           До
         <input
+        id='end'
           type="date"
           className="w-full font-semibold text-sm outline-none border-2 rounded-lg border-blue-200 bg-white"
           value={dateRange.end}

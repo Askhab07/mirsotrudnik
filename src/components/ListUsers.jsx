@@ -56,6 +56,7 @@ const ListUsers = () => {
     <ul className="flex flex-col gap-3 pb-40">
         {users.map(user => (
           <li
+          key={user.user_id}
           className="w-[335px] min-h-20 flex flex-col bg-blue-500 rounded-lg text-white"
           onClick={() => handleOpen(user.user_id)}
         >

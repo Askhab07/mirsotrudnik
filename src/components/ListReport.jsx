@@ -4,7 +4,7 @@ const ListReport = ({ report }) => {
   const [isOpen, setIsOpen] = useState(null);
 
   if (!report) {
-    return <div>Загрузка...</div>;
+    return <div className='animate-pulse'>Загрузка...</div>;
   }
 
   if (report.length === 0) {
