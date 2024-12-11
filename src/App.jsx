@@ -4,6 +4,7 @@ import Users from './pages/Users';
 import Report from './pages/Report';
 import AddUsers from './components/AddUsers';
 import AddReport from './components/AddReport';
+import Profile from './pages/Profile';
 
 function App() {
   const hiddenPaths = ['/auth'];
@@ -19,6 +20,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<Users />} />
         <Route path="/users/add" element={<AddUsers />} />
+        <Route path='/profile' element={<Profile />} />
         <Route path="*" element={<Navigate to="/report" replace/>} />
       </Routes>
       {!shouldHideBottomNav && <NavBar />}
