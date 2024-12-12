@@ -32,7 +32,7 @@ const NavBar = () => {
         <li className="w-16">
           <NavLink
             className={({isActive}) => `flex flex-col items-center gap-1 text-[10px] ${[isActive ? 'text-blue-500' : 'text-black']}`}
-            to="/chart"
+            to="/kassa"
           >
             <CurrencyDollarIcon className="size-6" />
             Касса

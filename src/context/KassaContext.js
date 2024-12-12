@@ -3,12 +3,12 @@ import axios from 'axios';
 import { url } from '../api/url'; // Путь к вашему API
 
 // Создаем контекст для отчетов
-export const ExpenseContext = createContext();
+export const KassaContext = createContext();
 
-export const ExpenseProvider = ({ children }) => {
+export const KassaProvider = ({ children }) => {
   // Храним данные отчетов в состоянии
-  const [expense, setExpense] = useState(() => {
-    const savedData = localStorage.getItem('expense');
+  const [kassa, setKassa] = useState(() => {
+    const savedData = localStorage.getItem('kassa');
     return savedData ? JSON.parse(savedData) : [];
   });
   const [error, setError] = useState(null);
@@ -24,16 +24,16 @@ export const ExpenseProvider = ({ children }) => {
       try {
         const response = await axios.get(url, { 
           params: { 
-            action: 'getExpense'
+            action: 'getTransaction'
            } 
           })
 
           const newData = response.data;
 
         // Проверяем, изменились ли данные
-        if (JSON.stringify(newData) !== JSON.stringify(expense)) {
-          setExpense(newData);
-          localStorage.setItem('expense', JSON.stringify(newData)); // Сохраняем в localStorage
+        if (JSON.stringify(newData) !== JSON.stringify(kassa)) {
+          setKassa(newData);
+          localStorage.setItem('kassa', JSON.stringify(newData)); // Сохраняем в localStorage
         }
 
         setIsDataFetched(true); // Отмечаем, что данные загружены
@@ -44,21 +44,21 @@ export const ExpenseProvider = ({ children }) => {
       }
     };
     fetchUsers();
-  }, [isDataFetched, expense]);
+  }, [isDataFetched, kassa]);
 
   // Функция для добавления нового отчета
-  const handleAddExpense = async (expenseData) => {
+  const handleAddKassa = async (kassaData) => {
     setIsLoading(true);
     try {
-      const response = await axios.post(url, expenseData, {
-        params: { action: 'addExpense' },
+      const response = await axios.post(url, kassaData, {
+        params: { action: 'addTransaction' },
         headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
       });
 
-      setExpense((prevUsers) => {
-        const updatedExpense = [...prevUsers, response.data];
-        localStorage.setItem('expense', JSON.stringify(updatedExpense));
-        return updatedExpense;
+      setKassa((prevUsers) => {
+        const updatedKassa = [...prevUsers, response.data];
+        localStorage.setItem('users', JSON.stringify(updatedKassa));
+        return updatedKassa;
       });
 
       alert('Отчет успешно добавлен!');
@@ -71,8 +71,8 @@ export const ExpenseProvider = ({ children }) => {
   };
 
   return (
-    <ExpenseContext.Provider value={{ expense, isLoading, error, handleAddExpense }}>
+    <KassaContext.Provider value={{ kassa, isLoading, error, handleAddKassa }}>
       {children}
-    </ExpenseContext.Provider>
+    </KassaContext.Provider>
   );
 };
