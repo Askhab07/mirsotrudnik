@@ -127,7 +127,7 @@ const HorizontalCalendar = () => {
 
   return (
     <div
-      className="flex flex-col gap-5 items-center bg-white shadow-md rounded-3xl p-4"
+      className="flex flex-col gap-5 items-center bg-white shadow rounded-3xl p-4"
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
     >

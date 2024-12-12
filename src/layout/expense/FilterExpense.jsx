@@ -23,7 +23,7 @@ const FilterExpense = ({
     ))}
   </select>
 
-  <div className="w-52 h-full flex flex-col justify-center px-3 py-1 items-end gap-2">
+  <div className="w-52 h-full flex flex-col justify-center py-1 items-end gap-2">
     <label htmlFor="start" className='flex items-center gap-2 font-semibold text-sm text-blue-600'>
       От
       <input
