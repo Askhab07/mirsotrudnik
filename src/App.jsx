@@ -7,6 +7,7 @@ import AddExpense from './layout/expense/AddExpense';
 import Report from './pages/Report';
 import Kassa from './pages/Kassa';
 import ShiftsKassa from './layout/kassa/ShiftsKassa';
+import AddKassa from './layout/kassa/AddKassa';
 
 function App() {
   const hiddenPaths = ['/auth'];
@@ -22,6 +23,7 @@ function App() {
         <Route path="/report" element={<Report />} />
         <Route path="/kassa" element={<Kassa />} />
         <Route path="/kassa/shifts" element={<ShiftsKassa />} />
+        <Route path="/kassa/add" element={<AddKassa />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/add" element={<AddUsers />} />
         <Route path="*" element={<Navigate to="/expense" replace/>} />

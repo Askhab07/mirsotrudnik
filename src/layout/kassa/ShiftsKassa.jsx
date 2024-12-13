@@ -7,7 +7,7 @@ const AddExpense = () => {
   const { shifts, handleAddShifts, isLoading } = useContext(ShiftsContext);
   const { users } = useContext(UsersContext);
   const [login, setLogin] = useState('');
-  const [shiftMarked, setShiftMarked] = useState(false);
+  const [shiftMarked, setShiftMarked] = useState('');
 
   if (!shifts) {
     return (
@@ -22,12 +22,12 @@ const AddExpense = () => {
 
     const newShifts = {
       login,
-      shiftMarked,
+      shift_marked: shiftMarked
     };
 
     handleAddShifts(newShifts);
     setLogin('');
-    setShiftMarked()
+    setShiftMarked('')
   };
 
   if (isLoading) {

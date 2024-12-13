@@ -22,7 +22,7 @@ const Kassa = () => {
         </Link>
         <Link
           className="w-14 h-14 bg-white shadow flex justify-center items-center text-xl rounded-xl"
-          to="/expense/add"
+          to="/kassa/add"
         >
           <DocumentCurrencyDollarIcon className="size-6 text-blue-600" />
         </Link>
