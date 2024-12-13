@@ -8,7 +8,7 @@ const SearchExpense = ({ searchQuery, onSearchChange }) => {
         <div
         className={`flex justify-between items-center w-[335px] h-10 ${
           isFocused ? 'border-blue-400 ring-2 ring-blue-300' : 'bg-gray-300'
-        } transition-all duration-300 rounded-lg px-3 text-blue-500 mb-5`}
+        } transition-all duration-300 rounded-lg px-3 text-blue-500 mb-3`}
       >
         <input
           className="w-64 bg-inherit outline-none placeholder:text-white"

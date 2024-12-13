@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import {
   AdjustmentsHorizontalIcon,
   DocumentPlusIcon,
+  XMarkIcon,
 } from '@heroicons/react/24/solid';
 import SearchExpense from '../layout/expense/SearchExpense';
 import React, { useState, useContext } from 'react';
@@ -52,27 +53,48 @@ const Expense = () => {
       <SearchExpense
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
-      />{' '}
-      {/* Передаем props */}
-      <div className={`flex flex-col items-end transition-all ease-in-out delay-100 duration-300 ${isOpen ? '' : 'mb-3'}`}>
-      <AdjustmentsHorizontalIcon
-        className="size-6 cursor-pointer"
-        onClick={handleClick}
       />
       <div
-        className={`transition-all duration-300 ease-in-out overflow-hidden ${
-          isOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
-        } w-[335px]`}
+        className={`flex flex-row-reverse items-center justify-between mb-3 transition-all ease-in-out duration-300 ${
+          isOpen ? 'h-20' : 'h-6'
+        }`}
       >
-        <FilterExpense
-          selectedLogin={selectedLogin}
-          onLoginChange={setSelectedLogin}
-          dateRange={dateRange}
-          onDateChange={setDateRange}
-          expense={expense}
-        />
+        <div
+          className={`flex flex-col justify-between items-end w-full transition-all duration-300 ease-in-out ${
+            isOpen ? 'h-20 py-1.5' : 'h-6'
+          }`}
+        >
+          {/* Иконка для переключения состояния */}
+          <AdjustmentsHorizontalIcon
+            className={`size-6 cursor-pointer transition-colors ${
+              isOpen ? 'text-blue-500' : 'text-gray-400'
+            }`}
+            onClick={handleClick}
+          />
+          {/* Иконка для сброса значений */}
+          <XMarkIcon
+            className={`transition-all duration-300 ease-in-out ${
+              isOpen ? 'size-6 text-red-500' : 'opacity-0 max-h-0'
+            }`}
+            onClick={() => setDateRange({ start: '', end: '' })}
+          />
+        </div>
+        <div
+          className={`transition-all duration-300 ease-in-out ${
+            isOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
+          } w-[335px]`}
+        >
+          {/* Фильтр */}
+          <FilterExpense
+            selectedLogin={selectedLogin}
+            onLoginChange={setSelectedLogin}
+            dateRange={dateRange}
+            onDateChange={setDateRange}
+            expense={expense}
+          />
+        </div>
       </div>
-    </div>
+
       <ListExponse expense={filteredExpenses} />
       <div className="flex justify-between fixed bottom-24 right-5">
         <Link
