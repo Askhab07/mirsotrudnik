@@ -7,6 +7,8 @@ import AddExpense from './layout/expense/AddExpense';
 import Report from './pages/Report';
 import Kassa from './pages/Kassa';
 import ShiftsKassa from './layout/kassa/ShiftsKassa';
+import ListKassa from './layout/kassa/ListKassa';
+import AddShiftsKassa from './layout/kassa/AddShiftsKassa';
 import AddKassa from './layout/kassa/AddKassa';
 
 function App() {
@@ -21,12 +23,16 @@ function App() {
         <Route path="/expense" element={<Expense />} />
         <Route path="/expense/add" element={<AddExpense />} />
         <Route path="/report" element={<Report />} />
-        <Route path="/kassa" element={<Kassa />} />
-        <Route path="/kassa/shifts" element={<ShiftsKassa />} />
+        <Route path="/kassa/*" element={<Kassa />}>
+          <Route index element={<Navigate to="shifts" replace />} />
+          <Route path="shifts" element={<ShiftsKassa />} />
+          <Route path="transaction" element={<ListKassa />} />
+        </Route>
+        <Route path="/kassa/shiftadd" element={<AddShiftsKassa />} />
         <Route path="/kassa/add" element={<AddKassa />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/add" element={<AddUsers />} />
-        <Route path="*" element={<Navigate to="/expense" replace/>} />
+        <Route path="*" element={<Navigate to="/expense" replace />} />
       </Routes>
       {!shouldHideBottomNav && <NavBar />}
     </>

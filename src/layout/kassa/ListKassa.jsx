@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
+import { KassaContext } from '../../context/KassaContext';
+import IsLoading from '../../components/IsLoading';
 
-const ListKassa = ({kassa}) => {
+const ListKassa = () => {
+  const { kassa } = useContext(KassaContext);
   const [isOpen, setIsOpen] = useState(null);
-
-  if (!kassa) {
-    return <div className="animate-pulse">Загрузка...</div>;
-  }
 
   if (kassa.length === 0) {
     return (
@@ -18,6 +18,11 @@ const ListKassa = ({kassa}) => {
   const handleOpen = (transaction_id) => {
     setIsOpen((prev) => (prev === transaction_id ? null : transaction_id));
   };
+
+  if (!kassa) {
+    <IsLoading />
+  }
+
   return (
     <ul className="flex flex-col gap-3 pb-16">
       {kassa.map((r) => (
