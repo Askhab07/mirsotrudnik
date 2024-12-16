@@ -34,9 +34,16 @@ const ShiftsKassa = () => {
           </div>
           <div>
             <h2 className="w-40 text-xl font-semibold">{shift.login}</h2>
-            <h2 className='text-gray-400 text-sm'>{shift.shift_marked === 'yes' ? 'Рабочий' : 'Не рабочий'}</h2>
+            <h2 className="text-gray-400 text-sm">
+              {shift.shift_marked === 'yes' ? 'Рабочий' : 'Не рабочий'}
+            </h2>
           </div>
-          <h2 className='text-sm text-blue-400'>{`${new Date(shift.date).toLocaleDateString()}г`}</h2>
+          <div className='flex flex-col items-end'>
+            <h2 className="text-sm text-blue-400">{`${new Date(
+              shift.date
+            ).toLocaleDateString()}г`}</h2>
+            <h2 className='font-bold'>{shift.amount} ₽</h2>
+          </div>
         </li>
       ))}
     </ul>

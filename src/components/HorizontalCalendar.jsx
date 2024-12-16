@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-const HorizontalCalendar = () => {
+const HorizontalCalendar = ({onDateChange}) => {
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth();
   const currentDate = new Date();
 
   const [selectedYear, setSelectedYear] = useState(currentYear);
   const [selectedMonth, setSelectedMonth] = useState(currentMonth);
+
   const [selectedStartDate, setSelectedStartDate] = useState(currentDate);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
+
   const [isExpanded, setIsExpanded] = useState(false);
 
   const touchStartY = useRef(null);
@@ -75,6 +77,7 @@ const HorizontalCalendar = () => {
         inline: 'center',
       });
     }
+    onDateChange(day, selectedEndDate || day);
   };
 
   const handleSelectMonth = (monthIndex) => {

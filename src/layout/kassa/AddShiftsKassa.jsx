@@ -44,7 +44,7 @@ const AddShiftsKassa = () => {
             Логин
           </option>
           {users.map((user) => (
-            <option key={user.user_id} value={user.name}>
+            <option key={user.user_id} value={user.login}>
               {user.name}
             </option>
           ))}

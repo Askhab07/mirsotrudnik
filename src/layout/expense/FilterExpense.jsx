@@ -6,6 +6,7 @@ const FilterExpense = ({
   dateRange,
   onDateChange,
   expense,
+  isOpen
 }) => {
   const uniqLogins = [...new Set(expense.map((r) => r.login))];
 

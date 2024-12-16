@@ -67,7 +67,7 @@ const Expense = () => {
           {/* Иконка для переключения состояния */}
           <AdjustmentsHorizontalIcon
             className={`size-6 cursor-pointer transition-colors ${
-              isOpen ? 'text-blue-500' : 'text-gray-400'
+              isOpen ? 'text-blue-500' : 'text-gray-300'
             }`}
             onClick={handleClick}
           />
@@ -81,7 +81,7 @@ const Expense = () => {
         </div>
         <div
           className={`transition-all duration-300 ease-in-out ${
-            isOpen ? 'opacity-100 max-h-[500px]' : 'opacity-0 max-h-0'
+            isOpen ? '' : 'hidden'
           } w-[335px]`}
         >
           {/* Фильтр */}
@@ -91,6 +91,7 @@ const Expense = () => {
             dateRange={dateRange}
             onDateChange={setDateRange}
             expense={expense}
+            isOpen={isOpen}
           />
         </div>
       </div>
